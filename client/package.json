@@ -1,0 +1,25 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "npx ts-node src/test.ts",
+    "start": "npm run build && npm run test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Client for 100x Staking Program",
+  "devDependencies": {
+    "@project-serum/anchor": "^0.26.0",
+    "@solana/spl-token": "^0.3.11",
+    "@solana/web3.js": "^1.98.2",
+    "@types/node": "^20.19.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "bs58": "^6.0.0"
+  }
+}

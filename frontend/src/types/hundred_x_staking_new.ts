@@ -1,0 +1,298 @@
+import { BN } from '@project-serum/anchor';
+import { PublicKey } from '@solana/web3.js';
+
+export interface StakingPool {
+    authority: PublicKey;
+    hundredXMint: PublicKey;
+    rewardRate: BN;
+    lockPeriod: BN;
+    totalStaked: BN;
+    totalRewardsDistributed: BN;
+    availableRewards: BN;
+    bump: number;
+}
+
+export interface StakerAccount {
+    owner: PublicKey;
+    stakedAmount: BN;
+    stakeTimestamp: BN;
+    rewardsClaimed: BN;
+    bump: number;
+}
+
+export type HundredXStakingIDL = {
+    version: "0.1.0";
+    name: "hundred_x_staking";
+    instructions: [
+        {
+            name: "initialize";
+            accounts: [
+                {
+                    name: "stakingPool";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "authority";
+                    isMut: true;
+                    isSigner: true;
+                },
+                {
+                    name: "systemProgram";
+                    isMut: false;
+                    isSigner: false;
+                }
+            ];
+            args: [
+                {
+                    name: "rewardRate";
+                    type: "u64";
+                },
+                {
+                    name: "lockPeriod";
+                    type: "u64";
+                }
+            ];
+        },
+        {
+            name: "stake";
+            accounts: [
+                {
+                    name: "stakingPool";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "stakerAccount";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "user";
+                    isMut: true;
+                    isSigner: true;
+                },
+                {
+                    name: "systemProgram";
+                    isMut: false;
+                    isSigner: false;
+                }
+            ];
+            args: [
+                {
+                    name: "amount";
+                    type: "u64";
+                }
+            ];
+        },
+        {
+            name: "unstake";
+            accounts: [
+                {
+                    name: "stakingPool";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "stakerAccount";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "user";
+                    isMut: true;
+                    isSigner: true;
+                },
+                {
+                    name: "systemProgram";
+                    isMut: false;
+                    isSigner: false;
+                }
+            ];
+            args: [];
+        },
+        {
+            name: "claimRewards";
+            accounts: [
+                {
+                    name: "stakingPool";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "stakerAccount";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "poolTokenAccount";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "userTokenAccount";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "user";
+                    isMut: false;
+                    isSigner: true;
+                },
+                {
+                    name: "tokenProgram";
+                    isMut: false;
+                    isSigner: false;
+                },
+                {
+                    name: "associatedTokenProgram";
+                    isMut: false;
+                    isSigner: false;
+                },
+                {
+                    name: "hundredXMint";
+                    isMut: false;
+                    isSigner: false;
+                },
+                {
+                    name: "systemProgram";
+                    isMut: false;
+                    isSigner: false;
+                }
+            ];
+            args: [];
+        }
+    ];
+    accounts: [
+        {
+            name: "stakingPool";
+            type: {
+                kind: "struct";
+                fields: [
+                    {
+                        name: "authority";
+                        type: "publicKey";
+                    },
+                    {
+                        name: "hundredXMint";
+                        type: "publicKey";
+                    },
+                    {
+                        name: "rewardRate";
+                        type: "u64";
+                    },
+                    {
+                        name: "lockPeriod";
+                        type: "i64";
+                    },
+                    {
+                        name: "totalStaked";
+                        type: "u64";
+                    },
+                    {
+                        name: "totalRewardsDistributed";
+                        type: "u64";
+                    },
+                    {
+                        name: "availableRewards";
+                        type: "u64";
+                    },
+                    {
+                        name: "bump";
+                        type: "u8";
+                    }
+                ];
+            };
+        },
+        {
+            name: "stakerAccount";
+            type: {
+                kind: "struct";
+                fields: [
+                    {
+                        name: "owner";
+                        type: "publicKey";
+                    },
+                    {
+                        name: "stakedAmount";
+                        type: "u64";
+                    },
+                    {
+                        name: "stakeTimestamp";
+                        type: "i64";
+                    },
+                    {
+                        name: "rewardsClaimed";
+                        type: "u64";
+                    },
+                    {
+                        name: "bump";
+                        type: "u8";
+                    }
+                ];
+            };
+        }
+    ];
+    errors: [
+        {
+            code: 6000;
+            name: "LockPeriodNotOver";
+            msg: "Lock period is not over yet";
+        },
+        {
+            code: 6001;
+            name: "InvalidRewardRate";
+            msg: "Invalid reward rate";
+        },
+        {
+            code: 6002;
+            name: "InvalidLockPeriod";
+            msg: "Invalid lock period";
+        },
+        {
+            code: 6003;
+            name: "InvalidMintAuthority";
+            msg: "Invalid mint authority";
+        },
+        {
+            code: 6004;
+            name: "InvalidStakeAmount";
+            msg: "Invalid stake amount";
+        },
+        {
+            code: 6005;
+            name: "InsufficientFunds";
+            msg: "Insufficient funds";
+        },
+        {
+            code: 6006;
+            name: "PoolOverflow";
+            msg: "Pool overflow";
+        },
+        {
+            code: 6007;
+            name: "InvalidTokenAccount";
+            msg: "Invalid token account";
+        },
+        {
+            code: 6008;
+            name: "InvalidTokenAccountOwner";
+            msg: "Invalid token account owner";
+        },
+        {
+            code: 6009;
+            name: "CalculationError";
+            msg: "Calculation error";
+        },
+        {
+            code: 6010;
+            name: "InsufficientPoolTokens";
+            msg: "Insufficient pool tokens";
+        },
+        {
+            code: 6011;
+            name: "InvalidStakerOwner";
+            msg: "Invalid staker owner";
+        }
+    ];
+}; 

@@ -1,0 +1,23 @@
+{
+    "name": "hundred_x_staking",
+    "version": "1.0.0",
+    "description": "100x School Staking System",
+    "main": "index.js",
+    "scripts": {
+        "create-token": "ts-node scripts/create-token.ts",
+        "init-pool": "ts-node scripts/initialize-pool.ts",
+        "mint-tokens": "ts-node scripts/mint-tokens.ts",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+        "@project-serum/anchor": "^0.31.1",
+        "@solana/spl-token": "^0.3.9",
+        "@solana/web3.js": "^1.87.6",
+        "bs58": "^5.0.0",
+        "dotenv": "^16.3.1"
+    },
+    "devDependencies": {
+        "ts-node": "^10.9.2",
+        "typescript": "^5.3.3"
+    }
+}

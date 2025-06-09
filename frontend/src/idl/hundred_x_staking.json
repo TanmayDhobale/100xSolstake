@@ -1,0 +1,268 @@
+{
+  "version": "0.1.0",
+  "name": "hundred_x_staking",
+  "instructions": [
+    {
+      "name": "stake",
+      "accounts": [
+        {
+          "name": "stakingPool",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "stakerAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "unstake",
+      "accounts": [
+        {
+          "name": "stakingPool",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "stakerAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "getPoolStats",
+      "accounts": [
+        {
+          "name": "stakingPool",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "claimRewards",
+      "accounts": [
+        {
+          "name": "stakingPool",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "stakerAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "poolTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "hundredXMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "StakingPool",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "publicKey"
+          },
+          {
+            "name": "hundredXMint",
+            "type": "publicKey"
+          },
+          {
+            "name": "rewardRate",
+            "type": "u64"
+          },
+          {
+            "name": "lockPeriod",
+            "type": "i64"
+          },
+          {
+            "name": "totalStaked",
+            "type": "u64"
+          },
+          {
+            "name": "totalRewardsDistributed",
+            "type": "u64"
+          },
+          {
+            "name": "availableRewards",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "StakerAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "publicKey"
+          },
+          {
+            "name": "stakedAmount",
+            "type": "u64"
+          },
+          {
+            "name": "stakeTimestamp",
+            "type": "i64"
+          },
+          {
+            "name": "rewardsClaimed",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "LockPeriodNotOver",
+      "msg": "Lock period is not over yet"
+    },
+    {
+      "code": 6001,
+      "name": "InvalidRewardRate",
+      "msg": "Invalid reward rate"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidLockPeriod",
+      "msg": "Invalid lock period"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidMintAuthority",
+      "msg": "Invalid mint authority"
+    },
+    {
+      "code": 6004,
+      "name": "InvalidStakeAmount",
+      "msg": "Invalid stake amount"
+    },
+    {
+      "code": 6005,
+      "name": "InsufficientFunds",
+      "msg": "Insufficient funds"
+    },
+    {
+      "code": 6006,
+      "name": "PoolOverflow",
+      "msg": "Pool overflow"
+    },
+    {
+      "code": 6007,
+      "name": "InvalidTokenAccount",
+      "msg": "Invalid token account"
+    },
+    {
+      "code": 6008,
+      "name": "InvalidTokenAccountOwner",
+      "msg": "Invalid token account owner"
+    },
+    {
+      "code": 6009,
+      "name": "CalculationError",
+      "msg": "Calculation error"
+    },
+    {
+      "code": 6010,
+      "name": "InsufficientPoolTokens",
+      "msg": "Insufficient pool tokens"
+    },
+    {
+      "code": 6011,
+      "name": "InvalidStakerOwner",
+      "msg": "Invalid staker owner"
+    },
+    {
+      "code": 6012,
+      "name": "InsufficientPoolBalance",
+      "msg": "Insufficient pool balance"
+    },
+    {
+      "code": 6013,
+      "name": "InvalidPoolTokenAmount",
+      "msg": "Invalid pool token amount"
+    },
+    {
+      "code": 6014,
+      "name": "InvalidAmount",
+      "msg": "Invalid amount"
+    }
+  ]
+} 
