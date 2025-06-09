@@ -2,6 +2,8 @@
 
 A decentralized staking application built on Solana that allows users to stake SOL and earn rewards in custom tokens.
 
+<img width="464" alt="Screenshot 2025-06-09 at 3 23 05 PM" src="https://github.com/user-attachments/assets/6148ba5a-c9eb-4b91-87a5-2d379d125236" />
+
 ## Features
 
 - 🌟 Stake SOL tokens and earn rewards
